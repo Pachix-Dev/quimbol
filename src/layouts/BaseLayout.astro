@@ -2,23 +2,73 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { ClientRouter, fade } from 'astro:transitions';
 
-const { title = 'QUIMBOL' } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const pages: Record<string, { title: string; description: string; type: string }> = {
+  '/': { title: 'Quimbol | Productos químicos para curtiduría en León', description: 'Fabricación y comercialización de productos químicos para curtiduría en León, Guanajuato. Conoce nuestras soluciones Quimbol y Quimser y contacta a ventas.', type: 'WebPage' },
+  '/productos': { title: 'Catálogo de productos para curtiduría | Quimbol', description: 'Explora 65 productos Quimbol y Quimser para curtiduría. Filtra por marca y proceso, consulta sus características y solicita una cotización por WhatsApp.', type: 'CollectionPage' },
+  '/quienes-somos': { title: 'Químicos para la industria del cuero en León | Quimbol', description: 'Conoce Quimbol, fabricante y comercializador de productos químicos para la industria del cuero en León, Guanajuato. Descubre nuestra misión y valores.', type: 'AboutPage' },
+  '/contacto': { title: 'Contacto y cotizaciones en León, Guanajuato | Quimbol', description: 'Contacta a Quimbol por WhatsApp al 4775666074 o escribe a ventas@quimbol.com. Consulta nuestra ubicación en León, horarios y los catálogos de Quimser.', type: 'ContactPage' },
+};
+const page = pages[path] || pages['/'];
+const { title = page.title, description = page.description } = Astro.props;
+const canonical = new URL(path === '/' ? '/' : path + '/', Astro.site!);
+const logo = new URL('/img/logo-quimbol-min.png', Astro.site!).href;
+const socialImage = new URL('/img/quimbol1-min.jpg', Astro.site!).href;
+const businessId = new URL('/#organization', Astro.site!).href;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'LocalBusiness', '@id': businessId, name: 'Quimbol', url: Astro.site!.href,
+      logo, image: socialImage, telephone: '+524775666074', email: 'ventas@quimbol.com',
+      description: 'Fabricación y comercialización de productos químicos para la industria del cuero.',
+      address: { '@type': 'PostalAddress', streetAddress: 'San Joaquín #121, Col. La Piscina', addressLocality: 'León', addressRegion: 'Guanajuato', postalCode: '37440', addressCountry: 'MX' },
+      openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '08:30', closes: '17:30' }],
+    },
+    { '@type': 'WebSite', '@id': new URL('/#website', Astro.site!).href, url: Astro.site!.href, name: 'Quimbol', inLanguage: 'es-MX', publisher: { '@id': businessId } },
+    { '@type': page.type, '@id': canonical.href + '#webpage', url: canonical.href, name: title, description, inLanguage: 'es-MX', isPartOf: { '@id': new URL('/#website', Astro.site!).href }, about: { '@id': businessId } },
+  ],
+};
 ---
-
 <!doctype html>
-<html lang="es">
+<html lang="es-MX">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#173c33" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Quimbol" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="Instalaciones de Quimbol en León, Guanajuato" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="Instalaciones de Quimbol en León, Guanajuato" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\u003c')} />
+    <ClientRouter />
   </head>
   <body>
+    <a href="#contenido" class="skip-link">Saltar al contenido</a>
     <Header />
-    <main>
+    <main id="contenido" transition:name="page-content" transition:animate={fade({ duration: '240ms' })}>
       <slot />
     </main>
     <Footer />
+    <script>
+      import '../scripts/motion';
+    </script>
   </body>
 </html>

@@ -1,209 +1,44 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const oils = [
-  {
-    name: 'CQ 320',
-    description: 'Es un aceite universal al ser un engrasante a base de sintéticos sulfonado de alta calidad, se obtienen cueros de corte.',
-    specs: ['% Aplicación: 7 al 10', 'PH: 6 a 8', '% Sólidos: 60+/-2'],
-  },
-  {
-    name: 'CQ 330',
-    description: 'Es un aceite sulfitado base alcohol graso de alta calidad, por lo cual se obtienen cueros con poco peso.',
-    specs: ['% Aplicación: 7 al 10', 'PH: 6 a 8', '% Sólidos: 70+/-2'],
-  },
-  {
-    name: 'CQ 340',
-    description: 'Es un engrasante a base de aceites sintéticos sulfitados de alta calidad, se obtienen cueros suaves y carnazas de buena calidad.',
-    specs: ['% Aplicación: 7 al 10', 'PH: 6 a 8', '% Sólidos: 60+/-2'],
-  },
-  {
-    name: 'CQ 350',
-    description: 'Es un aceite sulfitado de alta calidad, se obtienen cueros muy suaves ya sea para vestimenta o tapicería.',
-    specs: ['% Aplicación: 7 al 10', 'PH: 6 a 8', '% Sólidos: 75+/-2'],
-  },
-  {
-    name: 'CQ AC',
-    description: 'Es un aceite base éster fosfórico para el curtido resistente a los electrolitos y que mejora las características y/o propiedades físicas del cuero.',
-    specs: ['% Aplicación: 1 al 2', 'PH: 6 a 8', '% Sólidos: 52+/-1'],
-  },
-  {
-    name: 'CQ LS',
-    description: 'Es un aceite de tacto recomendado para todo tipo de pieles, cueros suaves y de bajo peso.',
-    specs: ['% Aplicación: 1 al 2', 'PH: 6 a 8', '% Sólidos: 50+/-2'],
-  },
-  {
-    name: 'CQ LSP',
-    description: 'Es un aceite de tacto recomendado para todo tipo de pieles, cueros suaves y de bajo peso.',
-    specs: ['% Aplicación: 0.5 al 1', 'PH: 6 a 8', '% Sólidos: 90+/-2'],
-  },
-];
-
-const sections = [
-  {
-    image: '/img/barril1.png',
-    imageFirst: false,
-    items: [
-      {
-        title: 'AUXILIAR PENETRANTE',
-        product: 'CQ A TR',
-        text: 'La Anilina Negra CQ A ATR, es un colorante adecuado para todo tipo de pieles: vegetalizados, napa, ante, nubock, hunting, cerdo, cuero doble-faz, que proporciona negros muy intensos.',
-        specs: ['% Aplicación: 2.5 al 4', 'PH: 6 a 8'],
-      },
-    ],
-  },
-  {
-    image: '/img/barril2.png',
-    imageFirst: true,
-    items: [
-      {
-        title: 'ACRÍLICO',
-        product: 'CQ A',
-        text: 'El acrílico es un copolímero acrílico que da a la piel buena firmeza de flor manteniendo un toque suave y liso.',
-        specs: ['% Aplicación: 2 al 4', 'PH: 6 a 8', '% Sólidos: 30+/-2'],
-      },
-      {
-        title: 'AMINA',
-        product: 'CQ AM',
-        text: 'La amina permite la reducción de cal del cuero, inhibe con esto el hinchamiento del cuero dando cueros más firmes.',
-        specs: ['% Aplicación: 0.5 al 1', 'PH: 6 a 8', '% Sólidos: 25+/-2'],
-      },
-    ],
-  },
-  {
-    image: '/img/barril3.png',
-    imageFirst: false,
-    items: [
-      {
-        title: 'DESENGRASANTE',
-        product: 'CQ D3',
-        text: 'Es un desengrasante base nonilfenol lo cual, proporciona un excelente proceso de desengrase y facilita la humectación de los cueros.',
-        specs: ['% Aplicación: 0.6 al 0.8', 'PH: 6 a 8', '% Sólidos: 20+/-30'],
-      },
-      {
-        title: 'DESENGRASANTE',
-        product: 'CQ BIO',
-        text: 'Es un desengrasante biodegradable a base de alcoholes láuricos, nos proporciona un excelente proceso de desengrase y facilita la humectación de los cueros, con activos biodegradables.',
-        specs: ['% Aplicación: 0.6 al 1', 'PH: 6 a 8', '% Sólidos: 50+/-2'],
-      },
-    ],
-  },
-  {
-    image: '/img/barril4.png',
-    imageFirst: true,
-    items: [
-      {
-        title: 'DESENCALANTE',
-        product: 'CQ D',
-        text: 'Es una mezcla de sales orgánicas e inorgánicas que producen un efecto suave en la piel dando cueros más firmes.',
-        specs: ['% Aplicación: 1 al 1.5', 'PH: 6 a 8', '% Sólidos: 30+/-2'],
-      },
-      {
-        title: 'DICIENDIAMIDA',
-        product: 'CQ DI',
-        text: 'Proporciona a los cueros una plenitud notablemente mejora, sobre todo en las partes de estructura floja de cuero.',
-        specs: ['% Aplicación: 2 al 4', 'PH: 6 a 8', '% Sólidos: 96+/-2'],
-      },
-      {
-        title: 'FENÓLICO',
-        product: 'CQ F',
-        text: 'Es un precurtiente fenólico recomendable para todo tipo de cueros en especial para las pieles blancas y tonos pastel.',
-        specs: [],
-      },
-    ],
-  },
-  {
-    image: '/img/barril5.png',
-    imageFirst: false,
-    items: [
-      {
-        title: 'FILLER',
-        product: 'CQ FP',
-        text: 'Es un filler proteínico de alto poder rellenante y partícula fina, incrementa la uniformidad del cuero y da un tacto más lleno para cueros blancos.',
-        specs: [],
-      },
-      {
-        product: 'CQ FV',
-        text: 'Es un filler vegetal es una mezcla de taninos, la cual proporciona llenura en las partes blandas del cuero.',
-        specs: [],
-      },
-      {
-        title: 'HUMECTANTE',
-        product: 'CQ H',
-        text: 'Este humectante ayuda a solubilizar e hidratar el cuero.',
-        specs: [],
-      },
-    ],
-  },
-  {
-    image: '/img/barril5.png',
-    imageFirst: true,
-    items: [
-      {
-        title: 'CURTIENTE',
-        product: 'CQ MM',
-        text: 'Curtiente vegetal.',
-        specs: ['% Aplicación: 3 al 4', 'PH: 6 a 8%', 'Sólidos: 50+/-2'],
-      },
-      {
-        title: 'PROTEÍNICO',
-        product: 'CQ PRO',
-        text: 'El proteínico es completamente estable a electrolitos, de tipo alcalinos y salinos, nos ayuda en el llenado de las partes más flojas del cuero.',
-        specs: ['% Aplicación: 3 al 5', 'PH: 6 a 8', '% Sólidos: 50+/-2'],
-      },
-    ],
-  },
-];
+import { products, productProcesses } from '../data/products';
+import { productInquiry } from '../data/contact';
+import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 ---
-
-<BaseLayout>
-  <section class="bg-[url('/img/fondo_productos2.jpg')] bg-cover bg-fixed bg-center bg-no-repeat">
-    <div class="container mx-auto p-8">
-      <h1 class="mb-6 text-center text-4xl font-bold">PRODUCTOS</h1>
-      <p class="mb-4 text-center text-lg">En Quimbol contamos con una amplia gama de productos de excelente calidad a un precio competitivo.</p>
-
-      <h2 class="mb-4 mt-10 text-center text-3xl font-bold">ACEITES</h2>
-      <div class="grid gap-4 md:grid-cols-3">
-        {
-          oils.map((oil) => (
-            <article>
-              <img src="/img/logo-quimbol-min.png" width="180" alt="Quimbol" />
-              <h3 class="text-xl font-bold">{oil.name}</h3>
-              <p>
-                {oil.description}
-                <br />
-                <strong>{oil.specs.map((spec) => <>{spec}<br /></>)}</strong>
-              </p>
-            </article>
-          ))
-        }
-      </div>
-
-      {
-        sections.map((section) => (
-          <div class="mt-5 grid gap-5 md:grid-cols-2 md:place-items-center">
-            {section.imageFirst && <img src={section.image} width="180" alt="Producto Quimbol" />}
-            <div>
-              {section.items.map((item) => (
-                <div>
-                  {item.title && <h2 class="mt-10 text-2xl font-bold">{item.title}</h2>}
-                  <p>
-                    <strong>{item.product}: </strong>
-                    {item.text}
-                    {item.specs.length > 0 && (
-                      <>
-                        <br />
-                        <strong>{item.specs.map((spec) => <>{spec}<br /></>)}</strong>
-                      </>
-                    )}
-                  </p>
-                </div>
-              ))}
-            </div>
-            {!section.imageFirst && <img src={section.image} width="180" alt="Producto Quimbol" />}
-          </div>
-        ))
-      }
-    </div>
-  </section>
-</BaseLayout>
+<BaseLayout><section class="page-intro shell catalog-intro"><div><p class="eyebrow">QUIMBOL + QUIMSER</p><h1>Encuentra la química<br/>que necesitas.</h1><p>Soluciones para cada etapa del cuero. Consulta aplicaciones y características, y cotiza directamente con nosotros.</p></div><div class="catalog-total"><strong>{products.length}</strong><span>productos en catálogo</span></div></section>
+<section class="shell catalog-section" aria-label="Catálogo de productos"><form data-reveal class="catalog-filters" role="search"><div class="search-field"><label for="product-search">Buscar producto</label><input id="product-search" type="search" placeholder="Nombre, aplicación o palabra clave…" autocomplete="off"/></div><div><label for="brand-filter">Marca</label><select id="brand-filter"><option value="">Todas las marcas</option><option>Quimbol</option><option>Quimser</option></select></div><div><label for="process-filter">Etapa de proceso</label><select id="process-filter"><option value="">Todos los procesos</option>{productProcesses.map(p=><option>{p}</option>)}</select></div><button type="reset" class="reset-button">Limpiar filtros</button></form><noscript><p>El catálogo completo está disponible. Activa JavaScript para usar la búsqueda y los filtros.</p></noscript><div class="catalog-meta"><p id="result-count" role="status" aria-live="polite">{products.length} productos</p><span>Selecciona un producto y consulta con ventas</span></div><div data-reveal class="product-grid">{products.map((p,i)=><article class="product-card" data-search={[p.name,p.nature,p.application,p.process,p.brand].join(' ')} data-brand={p.brand} data-process={p.process}><div class="card-top"><span class:list={['brand-tag',{'quimser-tag':p.brand==='Quimser'}]}>{p.brand}</span><span class="product-index">{String(i+1).padStart(2,'0')}</span></div><p class="product-process">{p.process || 'Auxiliar de proceso'}</p><h2>{p.name}</h2><p class="product-application">{p.application || p.nature}</p><dl class="product-specs"><div><dt>Estado a 25 °C</dt><dd>{p.state}</dd></div><div><dt>Concentración</dt><dd>{p.concentration || 'No especificada'}</dd></div></dl><details><summary>Características del producto</summary><p>{p.nature}</p><h3>Indicadores del catálogo</h3><dl class="risk-list"><div><dt>Riesgos a la salud</dt><dd>{p.health}</dd></div><div><dt>Inflamabilidad</dt><dd>{p.flammability}</dd></div><div><dt>Reactividad</dt><dd>{p.reactivity}</dd></div><div><dt>Riesgo específico</dt><dd>{p.specificRisk || 'No especificado'}</dd></div></dl></details><a class="product-cta" href={productInquiry(p.name)} target="_blank" rel="noopener noreferrer" aria-label={'Consultar '+p.name+' por WhatsApp'}><WhatsAppIcon/>Consultar producto <span aria-hidden="true">↗</span></a></article>)}</div><div id="empty-results" class="empty-state" hidden><h2>No encontramos coincidencias.</h2><p>Prueba otra palabra o elimina los filtros para ver todo el catálogo.</p><button class="button" id="clear-empty" type="button">Ver todos los productos</button></div></section></BaseLayout>
+<script>
+function initCatalog() {
+const catalog = document.querySelector<HTMLFormElement>('.catalog-filters');
+if (!catalog || catalog.dataset.initialized) return;
+catalog.dataset.initialized = 'true';
+const form = document.querySelector<HTMLFormElement>('.catalog-filters')!;
+const search = document.querySelector<HTMLInputElement>('#product-search')!;
+const brand = document.querySelector<HTMLSelectElement>('#brand-filter')!;
+const process = document.querySelector<HTMLSelectElement>('#process-filter')!;
+const cards = [...document.querySelectorAll<HTMLElement>('.product-card')];
+const normalize = (s:string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g,'');
+const params = new URLSearchParams(location.search);
+search.value=params.get('q') || '';
+if([...brand.options].some(o=>o.value===params.get('marca'))) brand.value=params.get('marca')!;
+if([...process.options].some(o=>o.value===params.get('proceso'))) process.value=params.get('proceso')!;
+function filter() {
+ const terms=search.value.trim().split(/\s+/).map(normalize).filter(Boolean);
+ let count=0;
+ cards.forEach(card=>{ const match=terms.every(t=>normalize(card.dataset.search || '').includes(t)) && (!brand.value || card.dataset.brand===brand.value) && (!process.value || card.dataset.process===process.value); card.hidden=!match; if(match) count++; });
+ document.querySelector('#result-count')!.textContent=count+' de '+cards.length+' productos';
+ document.querySelector<HTMLElement>('#empty-results')!.hidden=count>0;
+ const url=new URL(location.href);
+ for(const [key,value] of [['q',search.value],['marca',brand.value],['proceso',process.value]]) { if(value) url.searchParams.set(key,value); else url.searchParams.delete(key); }
+ history.replaceState(history.state,'',url);
+}
+form.addEventListener('submit',e=>e.preventDefault());
+search.addEventListener('input',filter);
+brand.addEventListener('change',filter);
+process.addEventListener('change',filter);
+form.addEventListener('reset',()=>setTimeout(filter,0));
+document.querySelector('#clear-empty')!.addEventListener('click',()=>{form.reset();search.focus();});
+filter();
+}
+document.addEventListener('astro:page-load', initCatalog);
+initCatalog();
+</script>

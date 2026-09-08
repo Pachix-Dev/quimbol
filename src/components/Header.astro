@@ -1,25 +1,9 @@
 ---
-const links = [
-  { href: '/', label: 'INICIO' },
-  { href: '/quienes-somos', label: 'QUIÉNES SOMOS' },
-  { href: '/productos', label: 'PRODUCTOS' },
-  { href: '/contacto', label: 'CONTACTO' },
-];
+const links = [{href:'/',label:'Inicio'},{href:'/quienes-somos',label:'Quiénes somos'},{href:'/productos',label:'Productos'},{href:'/contacto',label:'Contacto'}];
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname.slice(0, -1) || '/' : Astro.url.pathname;
 ---
-
-<nav class="bg-[#f8f9fa] px-3 py-3">
-  <div class="mx-auto flex max-w-7xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
-    <a href="/" aria-label="Quimbol">
-      <img src="/img/logo-quimbol-min.png" alt="Logo Quimbol" class="block w-[200px]" />
-    </a>
-    <div class="flex flex-wrap items-center justify-end gap-4">
-      {
-        links.map((link) => (
-          <a href={link.href} class="text-xs font-bold text-[#343a40] no-underline md:text-2xl">
-            {link.label}
-          </a>
-        ))
-      }
-    </div>
-  </div>
-</nav>
+<header class="site-header"><div class="shell header-inner">
+<a href="/" aria-label="Quimbol, inicio"><img class="brand-logo" src="/img/logo-quimbol-min.png" alt="Quimbol" width="180" height="70" /></a>
+<nav aria-label="Navegación principal">{links.map(link => <a href={link.href === '/' ? '/' : link.href + '/'} aria-current={path === link.href ? 'page' : undefined}>{link.label}</a>)}</nav>
+<a class="button header-cta" href="/contacto/">Hablemos de tu proyecto <span aria-hidden="true">↗</span></a>
+</div></header>

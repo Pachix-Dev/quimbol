@@ -1,30 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import { whatsapp } from '../data/contact';
 ---
-
-<BaseLayout>
-  <section class="bg-[url('/img/fondo_contacto.jpg')] bg-cover bg-fixed bg-no-repeat">
-    <div class="container mx-auto p-8 text-white">
-      <h1 class="mb-6 text-center text-4xl font-bold">QUIMBOL</h1>
-      <p class="mb-4 text-lg">
-        San Joaquín #121 Col. La Piscina <br />
-        CP.37440 León, Guanajuato, México
-      </p>
-      <p>
-        Tel. 477 735 9045 (52 1) <br />
-        477 876 4014
-      </p>
-      <a href="mailto:ventas@quimbol.com" target="_blank" class="font-bold">ventas@quimbol.com</a>
-      <p class="mt-5">Días y horarios de atención De Lunes a viernes de 8:30hrs a 17:30 hrs.</p>
-    </div>
-  </section>
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3722.3359945009906!2d-101.7178056!3d21.0991667!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842bc071ce0a15b9%3A0x708248008429cf02!2sSan%20Joaqu%C3%ADn%20161-101%2C%20La%20Piscina%20Kilometro%203.5%2C%2037440%20Le%C3%B3n%20de%20los%20Aldama%2C%20Gto.!5e0!3m2!1ses!2smx!4v1747940297329!5m2!1ses!2smx"
-    class="h-96 w-full"
-    style="border:0;"
-    allowfullscreen
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
-    title="Ubicacion Quimbol"
-  ></iframe>
-</BaseLayout>
+<BaseLayout><section class="page-intro shell"><p class="eyebrow">CONTACTO</p><h1>Tu próximo proyecto<br/>empieza aquí.</h1><p>Consulta productos, solicita una cotización o visítanos. Estamos para atenderte.</p></section><section class="shell contact-grid"><div data-reveal class="contact-panel"><p class="eyebrow">HABLEMOS</p><h2>Atención directa.</h2><a class="whatsapp-card" href={whatsapp} target="_blank" rel="noopener noreferrer"><WhatsAppIcon/><span><small>Iniciar conversación en WhatsApp</small><strong>4775666074</strong></span><span aria-hidden="true">↗</span></a><div class="contact-detail"><h3>Correo de ventas</h3><a class="text-link" href="mailto:ventas@quimbol.com">ventas@quimbol.com</a></div><div class="contact-detail"><h3>Visítanos</h3><address>San Joaquín #121, Col. La Piscina<br/>C.P. 37440, León, Guanajuato, México</address></div><div class="contact-detail"><h3>Horario de atención</h3><p>Lunes a viernes · 8:30 a 17:30 h</p></div></div><div data-reveal class="location-panel"><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3722.3359945009906!2d-101.7178056!3d21.0991667!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842bc071ce0a15b9%3A0x708248008429cf02!2sSan%20Joaqu%C3%ADn%20161-101%2C%20La%20Piscina%20Kilometro%203.5%2C%2037440%20Le%C3%B3n%20de%20los%20Aldama%2C%20Gto.!5e0!3m2!1ses!2smx!4v1747940297329!5m2!1ses!2smx" title="Ubicación de Quimbol en León, Guanajuato" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe><p>San Joaquín #121 · La Piscina · León, Guanajuato</p></div></section><section data-reveal class="shell section distributor"><a href="https://quimser.com/catalogos-2/?lang=es" target="_blank" rel="noopener noreferrer" class="distributor-logo"><img src="/img/quimser_distribuidor.jpg" alt="Quimser: consultar catálogos" width="260" loading="lazy"/><span>DISTRIBUIDOR</span></a><div><p class="eyebrow">AMPLIAMOS TUS POSIBILIDADES</p><h2>Distribuidores de Quimser.</h2><p>Conoce sus soluciones y consulta los catálogos de la marca.</p><a class="text-link" href="https://quimser.com/catalogos-2/?lang=es" target="_blank" rel="noopener noreferrer">Explorar catálogos Quimser ↗</a></div></section></BaseLayout>

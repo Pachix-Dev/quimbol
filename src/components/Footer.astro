@@ -1,5 +1,5 @@
-<footer class="bg-[#414042]">
-  <div class="container mx-auto flex flex-col items-center justify-center p-4">
-    <p class="text-center text-white">Copyright © 2025 | Quimbol | Todos los derechos reservados</p>
-  </div>
-</footer>
+---
+import { whatsapp } from '../data/contact';
+import WhatsAppIcon from './WhatsAppIcon.astro';
+---
+<footer class="site-footer"><div class="shell footer-grid"><div><a href="/" class="footer-brand">QUIMBOL<span>.</span></a><p>Química que transforma.<br/>Soluciones para la industria del cuero.</p></div><nav aria-label="Navegación del pie de página"><a href="/productos/">Catálogo de productos</a><a href="/quienes-somos/">Conoce Quimbol</a><a href="/contacto/">Contacto y ubicación</a></nav><div><a class="inline-link" href={whatsapp} target="_blank" rel="noopener noreferrer"><WhatsAppIcon />4775666074</a><a href="mailto:ventas@quimbol.com">ventas@quimbol.com</a><p>León, Guanajuato · México</p></div></div><div class="shell footer-bottom">© {new Date().getFullYear()} Quimbol. Todos los derechos reservados.</div></footer>

@@ -1,37 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const images = [
-  { src: '/img/quimbol1-min.jpg', alt: 'Instalaciones de Quimbol 1' },
-  { src: '/img/quimbol2-min.jpg', alt: 'Instalaciones de Quimbol 2' },
-  { src: '/img/quimbol3-min.jpg', alt: 'Instalaciones de Quimbol 3' },
-];
+import { products } from '../data/products';
+const stages = [{name:'Engrase',text:'Suavidad, tacto y flexibilidad para cada artículo.'},{name:'Recurtido',text:'Llenura y firmeza en la estructura del cuero.'},{name:'Teñido',text:'Colorantes para acompañar tu proceso.'}];
 ---
-
-<BaseLayout>
-  <section id="carousel" class="relative h-screen w-full overflow-hidden">
-    {
-      images.map((image, index) => (
-        <img
-          src={image.src}
-          alt={image.alt}
-          class:list={['carousel-img absolute inset-0 h-full w-full object-cover transition-opacity duration-700', index === 0 ? 'opacity-100' : 'opacity-0']}
-          data-index={index}
-        />
-      ))
-    }
-  </section>
-</BaseLayout>
-
-<script>
-  const imgs = document.querySelectorAll<HTMLImageElement>('.carousel-img');
-  let current = 0;
-
-  if (imgs.length > 1) {
-    setInterval(() => {
-      imgs[current].classList.replace('opacity-100', 'opacity-0');
-      current = (current + 1) % imgs.length;
-      imgs[current].classList.replace('opacity-0', 'opacity-100');
-    }, 3000);
-  }
-</script>
+<BaseLayout><section class="home-hero"><img src="/img/quimbol1-min.jpg" alt="Instalaciones de Quimbol" fetchpriority="high"/><div class="shell hero-content"><p class="eyebrow">QUÍMICA APLICADA A TU INDUSTRIA</p><h1>El siguiente paso<br/>para tu cuero.</h1><p>Fabricamos y comercializamos productos químicos que acompañan cada etapa de tu proceso.</p><div class="actions"><a class="button" href="/productos/">Explorar productos <span aria-hidden="true">↗</span></a><a class="button button-light" href="/contacto/">Contactar a ventas</a></div><div class="hero-caption">LEÓN, GUANAJUATO <span>QUIMBOL + QUIMSER</span></div></div></section>
+<section class="shell section"><div data-reveal class="section-heading"><div><p class="eyebrow">DE LA MATERIA PRIMA AL RESULTADO</p><h2>Una solución para<br/>cada proceso.</h2></div><p>Explora {products.length} productos por su aplicación y encuentra la opción que necesita tu producción.</p></div><div data-reveal class="three-grid">{stages.map((stage,i)=><a class="stage-card" href={'/productos/?proceso='+encodeURIComponent(stage.name)}><span class="index-number">0{i+1}</span><h3>{stage.name}</h3><p>{stage.text}</p><span class="text-link">Ver productos ↗</span></a>)}</div></section>
+<section class="soft-section"><div data-reveal class="shell split section"><img class="editorial-image" src="/img/quimbol2-min.jpg" alt="Área de trabajo de Quimbol" loading="lazy"/><div><p class="eyebrow">CONOCE QUIMBOL</p><h2>La química detrás<br/>de tu trabajo.</h2><p>Somos una empresa dedicada a la fabricación y comercialización de productos químicos, con un enfoque especial en el sector de la curtiduría.</p><a class="text-link" href="/quienes-somos/">Más sobre nosotros ↗</a></div></div></section><section data-reveal class="shell section cta-band"><div><p class="eyebrow">ESTAMOS PARA AYUDARTE</p><h2>Conversemos sobre lo que necesitas.</h2></div><a class="button" href="/contacto/">Contactar a Quimbol ↗</a></section></BaseLayout>
