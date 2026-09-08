@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const images = [
+  { src: '/img/quimbol1-min.jpg', alt: 'Instalaciones de Quimbol 1' },
+  { src: '/img/quimbol2-min.jpg', alt: 'Instalaciones de Quimbol 2' },
+  { src: '/img/quimbol3-min.jpg', alt: 'Instalaciones de Quimbol 3' },
+];
+---
+
+<BaseLayout>
+  <section id="carousel" class="relative h-screen w-full overflow-hidden">
+    {
+      images.map((image, index) => (
+        <img
+          src={image.src}
+          alt={image.alt}
+          class:list={['carousel-img absolute inset-0 h-full w-full object-cover transition-opacity duration-700', index === 0 ? 'opacity-100' : 'opacity-0']}
+          data-index={index}
+        />
+      ))
+    }
+  </section>
+</BaseLayout>
+
+<script>
+  const imgs = document.querySelectorAll<HTMLImageElement>('.carousel-img');
+  let current = 0;
+
+  if (imgs.length > 1) {
+    setInterval(() => {
+      imgs[current].classList.replace('opacity-100', 'opacity-0');
+      current = (current + 1) % imgs.length;
+      imgs[current].classList.replace('opacity-0', 'opacity-100');
+    }, 3000);
+  }
+</script>

@@ -1,0 +1,44 @@
+---
+import IconBadge from '../components/IconBadge.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pillars = [
+  {
+    title: 'MISIÓN',
+    icon: 'mission',
+    text: 'Somos una empresa joven que ofrece productos químicos de calidad, satisfaciendo las necesidades de nuestros clientes y brindándoles un excelente servicio.',
+  },
+  {
+    title: 'VISIÓN',
+    icon: 'vision',
+    text: 'Ser una empresa líder en el ramo de los químicos a nivel global, manteniendo un crecimiento sostenido y buscando siempre cumplir con las expectativas de nuestros clientes.',
+  },
+  {
+    title: 'VALORES',
+    icon: 'values',
+    text: 'Los valores que marcan el desempeño de nuestros colaboradores y el funcionamiento de la empresa. Respeto Lealtad Igualdad Responsabilidad.',
+  },
+];
+---
+
+<BaseLayout>
+  <section class="flex min-h-[calc(100vh-140px)] items-center justify-center bg-[url('/img/quimbol7-min.png')] bg-cover bg-center">
+    <div class="container mx-auto px-4 py-10 text-white">
+      <h1 class="mb-6 text-center text-5xl font-bold">QUIÉNES SOMOS</h1>
+      <p class="mb-4 text-xl">
+        Quimbol es una empresa dedicada a la fabricación y comercialización de productos químicos enfocados principalmente para el sector de la curtiduría, es una empresa fundada hace 6 años, la cual ha tenido un crecimiento rápido y sostenido.
+      </p>
+      <div class="grid gap-4 md:grid-cols-3">
+        {
+          pillars.map((pillar) => (
+            <article class="grid place-items-center text-center md:text-left">
+              <IconBadge type={pillar.icon} />
+              <h2 class="my-5 text-3xl font-bold">{pillar.title}</h2>
+              <p class="text-xl">{pillar.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
