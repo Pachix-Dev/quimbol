@@ -1,0 +1,86 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quimbol-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Verify deployment files
+        run: |
+          test -s dist/index.html
+          test -s dist/img/quimbol_quimser.jpeg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DEPLOY_HOST: ${{ secrets.HOST || vars.HOST }}
+      DEPLOY_USER: ${{ secrets.USER || vars.USER }}
+      SSHPASS: ${{ secrets.PASSWORD }}
+      DEPLOY_PATH: ${{ vars.DEPLOY_PATH || secrets.DEPLOY_PATH }}
+      DEPLOY_PORT: ${{ vars.SSH_PORT || '22' }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: dist/
+      - name: Validate deployment configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in DEPLOY_HOST DEPLOY_USER SSHPASS DEPLOY_PATH; do
+            if [[ -z "${!name}" ]]; then
+              echo "::error::Missing configuration: $name. See DEPLOYMENT.md."
+              exit 1
+            fi
+          done
+          [[ "$DEPLOY_HOST" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]*$ ]]
+          [[ "$DEPLOY_USER" =~ ^[a-zA-Z_][a-zA-Z0-9_-]*$ ]]
+          [[ "$DEPLOY_PORT" =~ ^[0-9]+$ ]]
+          [[ "$DEPLOY_PATH" =~ ^/[a-zA-Z0-9_/-]+$ && "$DEPLOY_PATH" != / ]]
+      - name: Install deployment tools
+        run: sudo apt-get update && sudo apt-get install -y sshpass rsync
+      - name: Upload static website
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          # Trust the server on first connection; reject changed keys during this job.
+          export RSYNC_RSH="sshpass -e ssh -p $DEPLOY_PORT -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15 -o PreferredAuthentications=password -o PubkeyAuthentication=no"
+          sshpass -e ssh -p "$DEPLOY_PORT" \
+            -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15 \
+            -o PreferredAuthentications=password -o PubkeyAuthentication=no \
+            "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p -- '$DEPLOY_PATH'"
+          # Upload assets before HTML so pages never reference assets still in transit.
+          rsync -rz --delay-updates --exclude='*.html' dist/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
+          rsync -rz --delay-updates --include='*/' --include='*.html' --exclude='*' dist/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
